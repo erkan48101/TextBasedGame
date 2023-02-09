@@ -13,12 +13,12 @@ public class Game {
         locations = new ArrayList<Location>();
 
         //world
-        locations.add(new OutdoorsArea("Forest", "You're back at the starting location", "You find yourself in a forest, theres trees all around you", "sunny"));
-        locations.add(new OutdoorsArea("Plains", "You're back at the plains", "You find yourself standing in the middle of some plains,\nthere is not much to see here.", "Sunny"));
-        locations.add(new OutdoorsArea("Cornfield", "You're back at the cornfield", "You find yoursef in the middle of a field of some overgrown corn.", "Foggy"));
-        locations.add(new Room("Shed", "You're back in the shed", "You find yourself inside a shed.\nit seems to be abandoned.", 3));
-        locations.add(new Room("Troll room", "You're back in the Troll room", "You enter a room which smells of troll \nthere are several bones scattered around the floor. ", 3));
-        locations.add(new OutdoorsArea("Graveyard", "You're back at the graveyard", "You enter what seems to be a graveyard. \nthere are tombstones all around you.", "cloudy"));
+        locations.add(new OutdoorsArea("Starting Location", "You're at the starting location", "", "sunny", true));
+        locations.add(new OutdoorsArea("Plains", "You're at the plains", "You find yourself standing in the middle of some plains,\nthere is not much to see here.", "Sunny", true));
+        locations.add(new OutdoorsArea("Cornfield", "You're at the cornfield", "You find yoursef in the middle of a field of some overgrown corn.", "Foggy", false));
+        locations.add(new Room("Shed", "You're in the shed", "You find yourself inside a shed.\nit seems to be abandoned.", 3, Boolean.TRUE));
+        locations.add(new Room("Troll room", "You're in the Troll room", "You enter a room which smells of troll \nthere are several bones scattered around the floor. ", 3, Boolean.FALSE));
+        locations.add(new OutdoorsArea("Graveyard", "You're at the graveyard", "You enter what seems to be a graveyard. \nthere are tombstones all around you.", "cloudy", true));
 
         //north, south, west, east
         locations.get(0).setPaths(locations.get(1), locations.get(2), locations.get(3), locations.get(4));
@@ -29,7 +29,9 @@ public class Game {
         locations.get(5).setPaths(null, locations.get(4), locations.get(1), null);
 
         //items
-        locations.get(0).addItem(new ElvenRobe(2, "ElvenRobe", 2));
+        locations.get(0).addItem(new ElvenRobe(2, "Elven_Robe", 2));
+        locations.get(3).addItem(new Shovel(3, "Shovel", 4));
+        locations.get(5).addItem(new Torch(1, "Torch", 100));
     }
 
     public String getCommand () {
@@ -48,15 +50,11 @@ public class Game {
         while (true) {
             String command;
             String[] separatedCommand;
-            player.getLocation().describeYourself();
             System.out.println("What do you want to do?");
             command = getCommand();
             separatedCommand = command.split(" "); //splitta den och skapa en array
             player.getLocation().doCommand(separatedCommand, player);
             player.doCommand(separatedCommand);
-
-            //vi vill göra en for loop som går igenom alla items spelaren har och kollar om vi kan genomföra en docommand
-
         }
     }
 }

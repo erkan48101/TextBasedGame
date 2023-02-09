@@ -15,26 +15,33 @@ public class Player {
 
     public void doCommand(String[] command) {
         if (command[0].equals("inventory")) {
+            System.out.println("\nInventory:");
             if (inventory.size() == 0) {
-                System.out.println("Your inventory is empty");
+                System.out.println("Your inventory is empty\n");
             } else {
                 for (int i = 0; i < inventory.size(); i++) {
-                    System.out.println(inventory.get(i).getName());
+                    //System.out.println(inventory.get(i).getName());
+                    inventory.get(i).printYourself();
+                    System.out.println();
                 }
             }
-        }
-        else {
+        } if (command[0].equals("stats")){
+            System.out.println("Stats:");
+            System.out.println("Health: " + health);
+            System.out.println("Gold: " + gold);
+        } else {
             for (int i = 0; i < inventory.size(); i++){
                 inventory.get(i).doCommand(command, this);
             }
         }
-
     }
 
     public void giveItem(Item item) {
         inventory.add(item);
     }
-
+    public void removeItem (Item item){
+        inventory.remove(item);
+    }
     public Location getLocation() {
         return position;
     }
@@ -52,6 +59,17 @@ public class Player {
 
     public void moveTo (Location destination) {
         position = destination;
+        destination.describeYourself();
+        destination.addVisitamount();
+    }
+
+    public int checkTorch () {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (position.getItems().get(i).getName().equals("torch")){
+
+            }
+        }
+        return 0;
     }
 
 }
